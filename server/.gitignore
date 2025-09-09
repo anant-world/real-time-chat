@@ -1,0 +1,56 @@
+# Node modules
+node_modules/
+
+# Build directories
+build/
+dist/
+
+# Runtime data
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment files
+.env
+.env.*.local
+.env.local
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# React build (if front-end and back-end are in same repo)
+client/build/
+client/node_modules/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Redis dump files (if Redis is configured to write to disk)
+dump.rdb
+appendonly.aof
+
+# MongoDB local data (if using a local mongod instance with --dbpath)
+data/
+*.lock
+
+# PM2 logs (if using PM2 for process management)
+.pm2/
+
+# Optional: Docker
+docker-compose.override.yml
+
+# Optional: OS
