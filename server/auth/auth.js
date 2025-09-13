@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { user as userModel } from "../models/user.model"
+import { user as userModel } from "../models/user.model.js"
 
 export const login = async (req, res) => {
     try {
@@ -31,9 +31,9 @@ export const login = async (req, res) => {
         const token = jwt.sign(
             {"username":foundUser.username,"id":foundUser._id},
             "sdjfosdjgoaij",
-            {expiresIn:"1d"})
+            {expiresIn:"10d"})
 
-            return res.status(200).json({
+            return res.status(200).cookie("token",token).json({
             success: true,
             message: "logged in",
             user: {
@@ -67,7 +67,7 @@ export const register=async (req,res)=>{
         }
         const existinguser=await userModel.findOne({email})
         if(existinguser){
-            return res.status(409).json({
+            return res.status(401).json({
                 message:"User already exsist",
                 success:false
             })
