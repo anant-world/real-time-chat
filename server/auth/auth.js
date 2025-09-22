@@ -40,6 +40,7 @@ export const login = async (req, res) => {
                 id: foundUser._id,
                 username: foundUser.username,
                 email: foundUser.email,
+                token: token
             },
             token  
         });
@@ -84,7 +85,8 @@ export const register=async (req,res)=>{
             user:{
                 id:newUser._id,
                 username:newUser.username,
-                email:newUser.email
+                email:newUser.email,
+                token: token
             }
         })
 
@@ -100,7 +102,43 @@ export const register=async (req,res)=>{
 export const logout= async(req,res)=>{
     return res.status(200).cookie("token","",{expires:new Date(Date.now()),httpOnly:true}).json({
         message:"User logged out successfully",
-        success:true
-
+        success:true,
+        token: ""
     })
 }
+
+export const isAuthenticated = (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+    try {
+      const authHeader = req.headers["authorization"];
+      if (!authHeader) {
+        return res.status(401).json({ message: "No token provided", success: false });
+      }
+  
+      const token = authHeader.split(" ")[1];
+      if (!token) {
+        return res.status(401).json({ message: "Invalid token format", success: false });
+      }
+  
+      jwt.verify(token, JWT_SECRET, (err: any, decoded: any) => {
+        if (err) {
+          return res.status(401).json({ message: "Invalid token", success: false });
+        }
+  
+        // Attach decoded user to req
+        req.user = {
+          id: decoded.id,
+          username: decoded.username,
+          email: decoded.email,
+        };
+  
+        next();
+      });
+    } catch (error) {
+      console.error("ERROR (isAuthenticated):", error);
+      return res.status(500).json({
+        error,
+        success: false,
+        message: "Internal server error",
+      });
+    }
+  };

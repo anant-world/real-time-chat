@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import { API_END_POINT } from '../utils/constant'
 import axios from 'axios'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 function Login() {
   const [isLogin,setIsLogin]=useState(false)
@@ -24,6 +23,7 @@ function Login() {
         const res= await axios.post(`${API_END_POINT}/login`,user)
         console.log(res)
         if(res.data.success){
+          localStorage.setItem("token", res.data.token)
           navigate("/chat")
         }
         

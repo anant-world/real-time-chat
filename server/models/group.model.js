@@ -1,21 +1,17 @@
 import mongoose, { Schema } from "mongoose";
 import { user } from "./user.model";
 const groupSchema= new Schema({
-    groupId:{
-        type:String,
-        required:true,
-        unique:true
-    },
     groupName:{
         type:String,
-        required:true
+        required:true,
+        unique: true,
     },
     admin:{
         type:Schema.Types.ObjectId,
         ref:"user",
         required:true
     },
-    member:[{
+    members:[{
         type:Schema.Types.ObjectId,
         ref:"user"
     }],
