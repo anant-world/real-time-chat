@@ -107,7 +107,7 @@ export const logout= async(req,res)=>{
     })
 }
 
-export const isAuthenticated = (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+export const isAuthenticated = (req, res, next) => {
     try {
       const authHeader = req.headers["authorization"];
       if (!authHeader) {
@@ -119,7 +119,7 @@ export const isAuthenticated = (req: Request & { user?: any }, res: Response, ne
         return res.status(401).json({ message: "Invalid token format", success: false });
       }
   
-      jwt.verify(token, JWT_SECRET, (err: any, decoded: any) => {
+      jwt.verify(token, JWT_SECRET, (err, decoded) => {
         if (err) {
           return res.status(401).json({ message: "Invalid token", success: false });
         }
