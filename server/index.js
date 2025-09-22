@@ -5,7 +5,12 @@ import databaseConnection from './config/db.js';
 import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
 import cors from 'cors'
+import { Server } from 'socket.io';
+import http from "http"
+
+
 const app = express();
+const server = http.createServer(app)
 
 dotenv.config();
 databaseConnection();
@@ -27,8 +32,19 @@ app.get("/",(req,res)=>{
     })
 })
 
+const io = new Server(server, {cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  }})
+
+  io.on("connection", (socket) => {
+    console.log("Socket Connected -> ", socket.id)
+  })
+
 app.use("/api/v1/user",userRoute)
 
-app.listen(3000, () => {
+
+
+server.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
