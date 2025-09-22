@@ -2,6 +2,7 @@ import React from 'react'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Login from './Login'
 import Chat from './Chat'
+import GroupChat from './GroupChat'
 
 function Body() {
     const appRouter= createBrowserRouter([{
@@ -11,6 +12,9 @@ function Body() {
     {
       path:"/chat",
       element:<Chat/>
+    },{
+      path:"/groupChat",
+      element:<GroupChat/>
     }
   ])
   return (
