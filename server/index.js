@@ -43,6 +43,9 @@ const io = new Server(server, {cors: {
     socket.on("message", (msg) => {
         socket.broadcast.emit("new-message", msg)
     })
+    socket.on("group-message", (msg) => {
+        socket.broadcast.emit("group-new-message", msg)
+    })
   })
 
 app.use("/api/v1/user",userRoute)

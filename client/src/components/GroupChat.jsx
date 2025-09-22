@@ -17,7 +17,7 @@ function GroupChat() {
             console.log("user dissconnected successfully",socketRef.current.id);
             
         })
-        socketRef.current.on("new message",(msg)=>{
+        socketRef.current.on("group-new-message",(msg)=>{
             setMessage((prev)=>([
                 ...prev,
                 msg
@@ -36,7 +36,13 @@ function GroupChat() {
             return
         }
 
-        socketRef.current.emit("message", allNewMessage)
+        socketRef.current.emit("group-message", allNewMessage)
+        setMessage((prev)=>([
+          ...prev,
+          allNewMessage
+      ]))
+
+      setAllNewMessage("")
     }
 
     return (
