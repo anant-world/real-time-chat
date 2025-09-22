@@ -3,11 +3,14 @@ import { useState } from 'react'
 import { API_END_POINT } from '../utils/constant'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 function Login() {
   const [isLogin,setIsLogin]=useState(false)
   const [username,setUserName]=useState("")
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
+
+  const navigate= useNavigate()
   
   const loginHandler= ()=>{
     setIsLogin(!isLogin)
@@ -20,6 +23,9 @@ function Login() {
       try {
         const res= await axios.post(`${API_END_POINT}/login`,user)
         console.log(res)
+        if(res.data.success){
+          navigate("/chat")
+        }
         
       } catch (error) {
         
