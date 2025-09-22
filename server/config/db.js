@@ -1,11 +1,8 @@
-
 import mongoose from "mongoose"
-import dotenx from 'dotenv'
-
 
 
 const databaseConnection=()=>{
-     mongoose.connect(process.env.MONGO_URI).then(()=>{
+     mongoose.connect("mongodb://127.0.0.1:27017/atkt").then(()=>{
         console.log("mongodb Connected successfully");
         
      }).catch((error)=>{

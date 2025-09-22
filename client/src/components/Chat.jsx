@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-
+ 
 const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState([]);
@@ -36,6 +36,10 @@ const Chat = () => {
         }
 
         socketRef.current.emit("message", newMessage)
+
+        setMessages((prev) => (
+          [...prev, newMessage]
+        ))
     }
 
     return (
@@ -45,7 +49,6 @@ const Chat = () => {
         Real-Time Chat
       </div>
 
-      {/* Chat messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {messages.map((msg, index) => (
           <div
